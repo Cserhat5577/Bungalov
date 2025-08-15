@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bungalov Tatil Köyü</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&h=600&fit=crop') center/cover;
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+        
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 25px;
+            border-radius: 25px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #FFD700;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .section {
+            background: rgba(255,255,255,0.15);
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .section h2 {
+            color: #FFD700;
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-align: center;
+        }
+        
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .price-card {
+            background: rgba(255,255,255,0.2);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #FFD700;
+            transition: transform 0.3s ease;
+        }
+        
+        .price-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .price-card h3 {
+            color: #FFD700;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        .price {
+            font-size: 2em;
+            font-weight: bold;
+            color: #00FF7F;
+            margin: 10px 0;
+        }
+        
+        .features {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .features li {
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .features li:before {
+            content: "✅ ";
+            margin-right: 10px;
+        }
+        
+        .reservation-form {
+            background: rgba(255,255,255,0.95);
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .contact-card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .contact-card h4 {
+            color: #FFD700;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .gallery-item {
+            background: rgba(255,255,255,0.1);
+            height: 200px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🏡 Bungalov Paradise Resort</h1>
+            <p>Doğayla İç İçe Premium Tatil Deneyimi</p>
+            <p style="font-size: 1.1em; margin-top: 10px; opacity: 0.85;">
+                ⭐⭐⭐⭐⭐ Misafir Memnuniyeti | 🌿 Doğal Yaşam | 🏊‍♂️ Premium Hizmet
+            </p>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Bungalov</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">4.9</span>
+                    <span class="stat-label">Değerlendirme</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Hizmet</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Galeri -->
+        <div class="section">
+            <h2>🖼️ Tesisimiz</h2>
+            <div class="gallery">
+                <div class="gallery-item" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2em; text-align: center;">
+                    <div>
+                        🏡<br><strong>Standart Bungalov</strong><br>
+                        <small>Doğayla iç içe konforlu konaklama</small>
+                    </div>
+                </div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2em; text-align: center;">
+                    <div>
+                        🏘️<br><strong>Aile Bungalovu</strong><br>
+                        <small>Geniş aileniz için ideal</small>
+                    </div>
+                </div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2em; text-align: center;">
+                    <div>
+                        🏖️<br><strong>Lüks Bungalov</strong><br>
+                        <small>Premium konfor ve hizmet</small>
+                    </div>
+                </div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2em; text-align: center;">
+                    <div>
+                        🏊‍♂️<br><strong>Havuz Alanı</strong><br>
+                        <small>Serinlemek için mükemmel</small>
+                    </div>
+                </div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2em; text-align: center;">
+                    <div>
+                        🌲<br><strong>Doğa Manzarası</strong><br>
+                        <small>Nefes kesen manzaralar</small>
+                    </div>
+                </div>
+                <div class="gallery-item" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); display: flex; align-items: center; justify-content: center; color: #333; font-size: 1.2em; text-align: center;">
+                    <div>
+                        🎯<br><strong>Aktivite Alanı</strong><br>
+                        <small>Eğlence ve spor imkanları</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fiyat Listesi -->
+        <div class="section">
+            <h2>💰 Fiyat Listesi</h2>
+            <div class="price-grid">
+                <div class="price-card">
+                    <h3>🏡 Standart Bungalov</h3>
+                    <div class="price">₺2.500/gece</div>
+                    <ul class="features">
+                        <li>2 kişilik</li>
+                        <li>1 yatak odası</li>
+                        <li>Özel banyo</li>
+                        <li>Balkon</li>
+                        <li>Kahvaltı dahil</li>
+                    </ul>
+                </div>
+                
+                <div class="price-card">
+                    <h3>🏘️ Aile Bungalovu</h3>
+                    <div class="price">₺4.200/gece</div>
+                    <ul class="features">
+                        <li>4 kişilik</li>
+                        <li>2 yatak odası</li>
+                        <li>Özel banyo</li>
+                        <li>Geniş teras</li>
+                        <li>Mutfak</li>
+                        <li>Kahvaltı dahil</li>
+                    </ul>
+                </div>
+                
+                <div class="price-card">
+                    <h3>🏖️ Lüks Bungalov</h3>
+                    <div class="price">₺6.800/gece</div>
+                    <ul class="features">
+                        <li>6 kişilik</li>
+                        <li>3 yatak odası</li>
+                        <li>2 banyo</li>
+                        <li>Jakuzi</li>
+                        <li>Özel bahçe</li>
+                        <li>Tüm öğünler dahil</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rezervasyon Formu -->
+        <div class="section">
+            <h2>📅 Online Rezervasyon</h2>
+            <div class="reservation-form">
+                <form id="reservationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Ad Soyad *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefon *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-posta *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="checkin">Giriş Tarihi *</label>
+                            <input type="date" id="checkin" name="checkin" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout">Çıkış Tarihi *</label>
+                            <input type="date" id="checkout" name="checkout" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bungalov-type">Bungalov Tipi *</label>
+                            <select id="bungalov-type" name="bungalov-type" required>
+                                <option value="">Seçiniz</option>
+                                <option value="standart">Standart Bungalov (₺2.500/gece)</option>
+                                <option value="aile">Aile Bungalovu (₺4.200/gece)</option>
+                                <option value="luks">Lüks Bungalov (₺6.800/gece)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="guests">Kişi Sayısı *</label>
+                            <select id="guests" name="guests" required>
+                                <option value="">Seçiniz</option>
+                                <option value="1">1 Kişi</option>
+                                <option value="2">2 Kişi</option>
+                                <option value="3">3 Kişi</option>
+                                <option value="4">4 Kişi</option>
+                                <option value="5">5 Kişi</option>
+                                <option value="6">6 Kişi</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="special-requests">Özel İstekler</label>
+                        <textarea id="special-requests" name="special-requests" rows="4" placeholder="Özel isteklerinizi buraya yazabilirsiniz..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">🎯 Rezervasyon Yap</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- İletişim -->
+        <div class="section">
+            <h2>📞 İletişim</h2>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <h4>📱 Rezervasyon Hattı</h4>
+                    <p><a href="tel:+905545617055" style="color: #FFD700; text-decoration: none;">+90 554 561 70 55</a></p>
+                    <small style="opacity: 0.8;">WhatsApp mevcut</small>
+                </div>
+                <div class="contact-card">
+                    <h4>📧 E-posta</h4>
+                    <p><a href="mailto:rezervasyon@bungalovparadise.com" style="color: #FFD700; text-decoration: none;">rezervasyon@bungalovparadise.com</a></p>
+                </div>
+                <div class="contact-card">
+                    <h4>📍 Konum</h4>
+                    <p>Doğa Paradise Mevkii<br>Kaş-Antalya, Türkiye</p>
+                    <small style="opacity: 0.8;">Kaş merkeze 15 dk</small>
+                </div>
+                <div class="contact-card">
+                    <h4>🏨 Rezervasyon</h4>
+                    <p>Online & Telefon</p>
+                    <small style="opacity: 0.8;">Anında onay</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form gönderme işlemi
+        document.getElementById('reservationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Form verilerini al
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const phone = formData.get('phone');
+            const email = formData.get('email');
+            const checkin = formData.get('checkin');
+            const checkout = formData.get('checkout');
+            const bungalovType = formData.get('bungalov-type');
+            const guests = formData.get('guests');
+            
+            // Basit doğrulama
+            if (!name || !phone || !email || !checkin || !checkout || !bungalovType || !guests) {
+                alert('❌ Lütfen tüm zorunlu alanları doldurunuz!');
+                return;
+            }
+            
+            // Tarih kontrolü
+            const checkinDate = new Date(checkin);
+            const checkoutDate = new Date(checkout);
+            const today = new Date();
+            
+            if (checkinDate < today) {
+                alert('❌ Giriş tarihi bugünden önce olamaz!');
+                return;
+            }
+            
+            if (checkoutDate <= checkinDate) {
+                alert('❌ Çıkış tarihi giriş tarihinden sonra olmalıdır!');
+                return;
+            }
+            
+            // Başarılı mesaj
+            alert(`✅ Rezervasyonunuz alınmıştır!\n\nSayın ${name},\nRezervasyon detaylarınız:\n📅 ${checkin} - ${checkout}\n🏡 ${bungalovType}\n👥 ${guests} kişi\n\nSize en kısa sürede dönüş yapacağız.`);
+            
+            // Formu temizle
+            this.reset();
+        });
+        
+        // Minimum tarih ayarla
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('checkin').setAttribute('min', today);
+            document.getElementById('checkout').setAttribute('min', today);
+        });
+        
+        // Check-in tarihi değiştiğinde check-out minimum tarihini ayarla
+        document.getElementById('checkin').addEventListener('change', function() {
+            const checkinDate = this.value;
+            document.getElementById('checkout').setAttribute('min', checkinDate);
+        });
+    </script>
+</body>
+</html>
